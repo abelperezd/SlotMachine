@@ -1,51 +1,82 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Roller : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private Vector3 _startPosition;
+    [SerializeField] private float _yRestartPosition = .75f;
+
+    private void Awake()
     {
+        _startPosition = transform.position;
     }
 
-    // Update is called once per frame
+
+    bool countTime = false;
+    float timerCount = 0;
     void Update()
     {
+        if (countTime)
+            timerCount += Time.deltaTime;
 
     }
 
-    public void StartSpinning(float spinningDuration, float spinVelocityInUnits, float slowDownDuration)
+    public void StartSpinning(int spins, float duration)
     {
-        StartCoroutine(Spin(spinningDuration, spinVelocityInUnits, slowDownDuration));
+        StartCoroutine(Spin(spins, duration));
     }
-    IEnumerator Spin(float spinningDuration, float spinVelocityInUnits, float slowDownDuration)
+
+    public int stepsPerFigure;
+    IEnumerator Spin(int spinsssss, float durationn)
     {
-        float counter = 0;
+        float figureSize = 2.2f; // units/fig
 
-        while (counter < spinningDuration)
+        float duration = 5; //  sec
+
+        int vel = 8; // fig/sec
+
+        int figuresToSee = (int)(vel * duration); //    figs
+
+        //int stepsPerFigure = 22; //  steps/figure
+
+        int stepsToDo = figuresToSee * stepsPerFigure; //   steps
+
+        float velInUnitsPerStep = vel * (float)figureSize * (float)duration / (float)stepsToDo; // units/step
+
+        countTime = true;
+
+        float slowDownPercentage = 0.2f;
+
+        int slowDownFigures = (int)Mathf.Ceil(vel * slowDownPercentage);
+
+        int lastSteps = slowDownFigures * stepsPerFigure;
+
+        int extraSubSteps = 1;
+
+        int extraSubstepsFactor = vel / slowDownFigures;
+
+
+        for (int j = 0; j < stepsToDo; j++)
         {
-            counter += Time.deltaTime;
-            transform.position += Vector3.up * Time.deltaTime * spinVelocityInUnits;
-            yield return null;
+            for (int i = 0; i < extraSubSteps; i++)
+            {
+                TryRestart();
+                transform.position -= Vector3.up * velInUnitsPerStep / extraSubSteps;
+                //yield return null;
+                yield return new WaitForSeconds(duration / stepsToDo / extraSubSteps);
+            }
+            if (j > (stepsToDo - lastSteps))
+                extraSubSteps += extraSubstepsFactor;
         }
+        countTime = false;
+    }
 
-
-        float slowDownFactor = 1;
-
-
-        counter = 0;
-
-        float unitsIncreased = 0;
-        while (counter < slowDownDuration)
-        {
-            counter += Time.deltaTime;
-            slowDownFactor -= Time.deltaTime / slowDownDuration;
-            unitsIncreased += Time.deltaTime * spinVelocityInUnits * slowDownFactor;
-            transform.position += Vector3.up * Time.deltaTime * spinVelocityInUnits * slowDownFactor;// * vel;
-            yield return null;
-        }
-        Debug.Log("Figures: " + unitsIncreased);
-
+    private void TryRestart()
+    {
+        if (transform.position.y <= _yRestartPosition)
+            transform.position = _startPosition - Vector3.up * (Mathf.Abs(transform.position.y - _yRestartPosition));
     }
 }

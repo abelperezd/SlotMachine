@@ -11,19 +11,17 @@ public class RollerManager : MonoBehaviour
     [Tooltip("Figures/second")]
     [SerializeField] private int _spinVelocity = 8;
 
+    [Tooltip("Steps/figure")]
+    [SerializeField] private int _resolution = 8;
+
     [Tooltip("Seconds")]
     [SerializeField] private float _delayBetweenRollers = .5f;
 
-    [Tooltip("Must be multiple of 0.5")]
     [SerializeField] private float _slowDownDuration = 2f;
 
     [SerializeField] private float _minSpinningDuration = 2;
 
     [SerializeField] private float _maxSpinningDuration = 4;
-
-    private float SpinVelocityInUnits => _spinVelocity * FIGURE_SIZE;
-    private float SlowDownDuration => (Mathf.Ceil(_slowDownDuration) + Mathf.Floor(_slowDownDuration)) / 2;
-
 
     private void StartSpinningRollers()
     {
@@ -34,7 +32,10 @@ public class RollerManager : MonoBehaviour
     {
         foreach (Roller r in _rollers)
         {
-            r.StartSpinning(GetSpinningDuration(), SpinVelocityInUnits, GetSlowDownDuration());
+            int spins;
+            float duration;
+            (spins, duration) = GetSpinsAndDuration();
+            r.StartSpinning(spins, duration);
             yield return new WaitForSeconds(_delayBetweenRollers);
         }
     }
@@ -45,10 +46,10 @@ public class RollerManager : MonoBehaviour
         StartSpinningRollers();
     }
 
-    private float GetSpinningDuration()
+    private (int, float) GetSpinsAndDuration()
     {
         float randomDuration = Random.Range(_minSpinningDuration, _maxSpinningDuration);
-//        Debug.Log("randomDuration: " + randomDuration);
+        //        Debug.Log("randomDuration: " + randomDuration);
 
         int spins = Mathf.RoundToInt(_spinVelocity * randomDuration);
         //Debug.Log("spin velocity: " + SpinVelocity);
@@ -56,8 +57,8 @@ public class RollerManager : MonoBehaviour
         //Debug.Log("spins: " + spins);
 
         float spinDuration = (float)spins / _spinVelocity;
-  //      Debug.Log("spin duration: " + spinDuration);
-        return spinDuration;
+        //      Debug.Log("spin duration: " + spinDuration);
+        return (spins, spinDuration);
     }
 
     private float GetSlowDownDuration()
@@ -65,7 +66,7 @@ public class RollerManager : MonoBehaviour
         int spins = Mathf.RoundToInt(_spinVelocity * _slowDownDuration);
         Debug.Log("spins " + spins);
         float spinDuration = (float)spins / _spinVelocity;
-       // Debug.Log("spin duration " + spinDuration);
+        // Debug.Log("spin duration " + spinDuration);
         return spinDuration;
     }
 
