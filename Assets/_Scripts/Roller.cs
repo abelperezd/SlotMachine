@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class Roller : MonoBehaviour
 {
+    [SerializeField]
+    private int _position = 0;
+
+    public int Position => _position;
 
     private Vector3 _startPosition;
     [SerializeField] private float _yRestartPosition = .75f;
+
+    internal event Action OnRollerStopped;
 
     private void Awake()
     {
@@ -47,6 +53,7 @@ public class Roller : MonoBehaviour
             if (j > (config.stepsToDo - config.slowDownSteps) && j%config.visualizationFrequency == 0)
                 extraSubSteps += config.extraSubstepsFactor;
         }
+        OnRollerStopped?.Invoke();
     }
 
     private void TryRestart()

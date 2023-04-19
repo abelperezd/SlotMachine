@@ -14,6 +14,7 @@ public struct SpinningConfiguration
 
 public class RollerManager : MonoBehaviour
 {
+    public RollerTimingController timingController;
     // units/figure
     private const float FIGURE_SIZE = 2.2f;
 
@@ -51,8 +52,6 @@ public class RollerManager : MonoBehaviour
     {
         foreach (Roller r in _rollers)
         {
-            int spins;
-            float duration;
             SpinningConfiguration configuration = GetSpinningConfiguration(GetSpinDuration());
             r.StartSpinning(configuration);
             yield return new WaitForSeconds(_delayBetweenRollers);
@@ -83,7 +82,7 @@ public class RollerManager : MonoBehaviour
 
         float velInUnitsPerStep = _spinVelocity * FIGURE_SIZE * spinDuration / (float)stepsToDo; // units/step
 
-        int slowDownFigures = (int)Mathf.Ceil(figuresToSee * _slowDownPercentage);
+        int slowDownFigures = Mathf.CeilToInt(figuresToSee * _slowDownPercentage);
 
         int slowDownSteps = slowDownFigures * _visualizationFrequency;
 
