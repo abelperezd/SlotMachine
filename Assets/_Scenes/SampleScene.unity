@@ -2841,9 +2841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rollers:
   - {fileID: 1050686968}
-  _spinVelocity: 5
+  _spinVelocity: 13
   _delayBetweenRollers: 0.5
-  _slowDownDuration: 1
+  _slowDownDuration: 0.75
   _minSpinningDuration: 1
   _maxSpinningDuration: 3
 --- !u!4 &1490974907

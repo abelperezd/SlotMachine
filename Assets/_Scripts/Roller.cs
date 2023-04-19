@@ -15,34 +15,37 @@ public class Roller : MonoBehaviour
 
     }
 
-    public void StartSpinning(float spinningDuration, float spinVelocity, float slowDownDuration)
+    public void StartSpinning(float spinningDuration, float spinVelocityInUnits, float slowDownDuration)
     {
-        StartCoroutine(Spin(spinningDuration, spinVelocity, slowDownDuration));
+        StartCoroutine(Spin(spinningDuration, spinVelocityInUnits, slowDownDuration));
     }
-    IEnumerator Spin(float spinningDuration, float spinVelocity, float slowDownDuration)
+    IEnumerator Spin(float spinningDuration, float spinVelocityInUnits, float slowDownDuration)
     {
-
         float counter = 0;
 
         while (counter < spinningDuration)
         {
             counter += Time.deltaTime;
-            transform.position += Vector3.up * Time.deltaTime * spinVelocity;// * vel;
+            transform.position += Vector3.up * Time.deltaTime * spinVelocityInUnits;
             yield return null;
         }
 
-        /*
+
         float slowDownFactor = 1;
 
 
         counter = 0;
-        while (counter < .37f)
+
+        float unitsIncreased = 0;
+        while (counter < slowDownDuration)
         {
             counter += Time.deltaTime;
-            slowDownFactor -= Time.deltaTime / .37f;
-            transform.position += Vector3.up * Time.deltaTime * spinVelocity * slowDownFactor;// * vel;
+            slowDownFactor -= Time.deltaTime / slowDownDuration;
+            unitsIncreased += Time.deltaTime * spinVelocityInUnits * slowDownFactor;
+            transform.position += Vector3.up * Time.deltaTime * spinVelocityInUnits * slowDownFactor;// * vel;
             yield return null;
         }
-        */
+        Debug.Log("Figures: " + unitsIncreased);
+
     }
 }
