@@ -35,10 +35,9 @@ public class Roller : MonoBehaviour
         StartCoroutine(Spin(config));
     }
 
-    public int stepsPerFigure;
     IEnumerator Spin(SpinningConfiguration config)
     {
-
+        yield return null;
         int extraSubSteps = 1;
 
         for (int j = 0; j < config.stepsToDo; j++)

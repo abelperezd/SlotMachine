@@ -23,14 +23,14 @@ public class Figure : MonoBehaviour
     [field: SerializeField]
     public FigureType Type { get; private set; }
 
-    public int[] coordinates = new int[2];
+    public Coordinates coordinates;
 
     [SerializeField] private int roller;
 
     void Awake()
     {
         _roller = GetComponentInParent<Roller>();
-        coordinates[0] = _roller.Position;
+        coordinates.x = _roller.Position;
     }
 
     private void Start()
@@ -45,11 +45,13 @@ public class Figure : MonoBehaviour
 
     private void RollerStopped()
     {
-        if (CheckMyPosition() == -1)
+        int pos = CheckMyPosition();
+        if (pos == -1)
             return;
 
-        Debug.Log("I'm selected: " + name);
-        //PrizeManager.Instance.
+        coordinates.y = pos;
+        //Debug.Log("I'm selected: " + name);
+        PrizeManager.Instance.AddFigureToCheck(this);
     }
 
     private int CheckMyPosition()
@@ -57,13 +59,13 @@ public class Figure : MonoBehaviour
         //Debug.Log(name + " -> original pos " + transform.position.y);
         int pos = Mathf.RoundToInt(transform.position.y);
 
+        //Debug.Log(name + " -> pos: " + pos);
         if (pos == 3)
             return 0;
         if (pos == 1)
             return 1;
         if (pos == -1)
             return 2;
-        //Debug.Log(name + " -> pos: " + pos);
         return -1;
     }
 }
