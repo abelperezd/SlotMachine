@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     Animator _animator;
 
     public TMP_Text prizeText;
-    public TMP_Text scoreText;
+    public TMP_Text creditText;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -29,19 +29,21 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         PrizeManager.Instance.OnShowPrize += PlayPrizeAnimation;
+        GameManager.Instance.OnGameStarted += UpdateCredit;
+        GameManager.Instance.OnGameFinished += UpdateCredit;
+        UpdateCredit();
     }
 
     private void PlayPrizeAnimation(int prize, float duration)
     {
-        UpdateScore(prize);
         prizeText.text = prize.ToString();
         _animator.SetFloat("vel", duration);
         _animator.SetTrigger("play");
     }
 
-    private void UpdateScore(int prize)
+    private void UpdateCredit()
     {
-        scoreText.text = (int.Parse(scoreText.text) + prize).ToString();
+        creditText.text = (GameManager.Instance.Credit.ToString());
     }
 
 }

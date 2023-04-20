@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prizeText: {fileID: 459805577}
-  scoreText: {fileID: 1293913973}
+  creditText: {fileID: 1293913973}
 --- !u!1 &440144245
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,6 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50251a52a310d33409bf6a221d4a6804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _credit: 50
 --- !u!4 &1129991581
 Transform:
   m_ObjectHideFlags: 0
@@ -1119,7 +1120,7 @@ GameObject:
   - component: {fileID: 1293913974}
   - component: {fileID: 1293913973}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Credit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1633,7 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbf01a9a67a05f4fa16f4a1ba6371a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBetweenPrizes: 1
+  delayBetweenPrizes: 0.5
 --- !u!4 &1971438125
 Transform:
   m_ObjectHideFlags: 0

@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     internal event Action OnGameStarted;
     internal event Action OnGameFinished;
 
+    [SerializeField] private int _credit = 50;
+    public int Credit => _credit;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -25,11 +28,16 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (Credit <= 0)
+            return;
+
+        _credit--;
         OnGameStarted?.Invoke();
     }
 
-    public void GameFinished()
+    public void GameFinished(int prize)
     {
+        _credit += prize;
         OnGameFinished?.Invoke();
     }
 }
