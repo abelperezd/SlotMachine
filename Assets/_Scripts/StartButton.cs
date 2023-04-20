@@ -31,6 +31,8 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         btn = GetComponent<Button>();
         btnImage = btn.GetComponent<Image>();
         btn.onClick.AddListener(StartPressed);
+
+        GameManager.Instance.OnGameFinished += EnableButton;
     }
 
     private void StartPressed()
@@ -39,4 +41,9 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         btn.interactable = false;
     }
 
+    private void EnableButton()
+    {
+        btn.interactable = true;
+        btnImage.sprite = normal;
+    }
 }

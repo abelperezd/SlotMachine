@@ -15,7 +15,7 @@ public struct Coordinates
     }
 }
 
-
+[RequireComponent(typeof(Animator))]
 public class Figure : MonoBehaviour
 {
     private Roller _roller;
@@ -27,6 +27,8 @@ public class Figure : MonoBehaviour
 
     private int roller;
 
+    private Animator _animator;
+
     void Awake()
     {
         _roller = GetComponentInParent<Roller>();
@@ -35,6 +37,7 @@ public class Figure : MonoBehaviour
 
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         _roller.OnRollerStopped += RollerStopped;
     }
 
@@ -67,5 +70,11 @@ public class Figure : MonoBehaviour
         if (pos == -1)
             return 2;
         return -1;
+    }
+
+    internal  void PlayPrizeAnimation(float duration)
+    {
+        _animator.SetFloat("vel", duration);
+        _animator.SetTrigger("play");
     }
 }

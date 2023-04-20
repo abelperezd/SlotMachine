@@ -10,9 +10,14 @@ public class PrizeManager : MonoBehaviour
 
     public static PrizeManager Instance => _instance;
 
+    [Tooltip("In case there are multiple patterns")]
+    public float delayBetweenPrizes = 1;
+
     private List<Figure> selectedFigures = new List<Figure>();
 
     private PrizeChecker checker = new PrizeChecker();
+
+    internal event Action<int, float> OnShowPrize;
 
     private void Awake()
     {
@@ -51,12 +56,17 @@ public class PrizeManager : MonoBehaviour
                             continue;
 
                         Figure fig = selectedFigures.Find(f => f.coordinates.x == j && f.coordinates.y == i);
+                        fig.PlayPrizeAnimation(delayBetweenPrizes);
                         Debug.Log("I have prize!: " + fig.name + " -> " + fig.transform.parent.name);
                     }
                 }
-                yield return new WaitForSeconds(.5f);
+                OnShowPrize?.Invoke(p.prize, delayBetweenPrizes);
+                yield return new WaitForSeconds(delayBetweenPrizes);
             }
         }
+        selectedFigures.Clear();
+
+        GameManager.Instance.GameFinished();
     }
     public FigureType[,] GetFigureTypes()
     {

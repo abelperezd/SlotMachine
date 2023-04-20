@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
 
     internal event Action OnGameStarted;
+    internal event Action OnGameFinished;
 
     private void Awake()
     {
@@ -25,5 +26,10 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         OnGameStarted?.Invoke();
+    }
+
+    public void GameFinished()
+    {
+        OnGameFinished?.Invoke();
     }
 }
