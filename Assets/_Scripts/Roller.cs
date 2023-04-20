@@ -17,7 +17,7 @@ public class Roller : MonoBehaviour
 
     internal event Action OnRollerStopped;
 
-    private void Awake()
+    private void Start()
     {
         SpawnFigures();
         InitializePosition();
@@ -37,14 +37,18 @@ public class Roller : MonoBehaviour
 
         for (int i = 0; i < figures.Count; i++)
         {
-            FigureFactory.Instance.BuildFigure(figures[i], transform).transform.localPosition = new Vector3(0,spawnPos,0);
+            Figure fig = FigureFactory.Instance.BuildFigure(figures[i], transform);
+            fig.transform.localPosition = new Vector3(0, spawnPos, 0);
+            fig.name = fig.name + i;
             spawnPos -= figureSize;
         }
 
         //To make the repetition trick
         for (int i = 0; i < 3; i++)
         {
-            FigureFactory.Instance.BuildFigure(figures[i], transform).transform.localPosition = new Vector3(0, spawnPos, 0);
+            Figure fig = FigureFactory.Instance.BuildFigure(figures[i], transform);
+            fig.transform.localPosition = new Vector3(0, spawnPos, 0);
+            fig.name = fig.name + (figures.Count + i);
             spawnPos -= figureSize;
         }
     }

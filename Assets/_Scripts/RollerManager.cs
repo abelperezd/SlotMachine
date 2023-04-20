@@ -50,13 +50,12 @@ public class RollerManager : MonoBehaviour
 
     IEnumerator SpinRollers()
     {
+        float baseDuration = GetSpinBaseDuration();
         foreach (Roller r in _rollers)
         {
-            SpinningConfiguration configuration = GetSpinningConfiguration(GetSpinDuration());
+            SpinningConfiguration configuration = GetSpinningConfiguration(GetExtraRandomDuration(baseDuration));
             r.StartSpinning(configuration);
             yield return new WaitForSeconds(_delayBetweenRollers);
-            //remove this!!
-            yield break;
         }
     }
 
@@ -65,12 +64,16 @@ public class RollerManager : MonoBehaviour
         GameManager.Instance.OnGameStarted += StartSpinningRollers;
     }
 
-    private float GetSpinDuration()
+    private float GetSpinBaseDuration()
     {
-        float randomDuration = Random.Range(_minSpinningDuration, _maxSpinningDuration) +
-            Mathf.Clamp(Random.Range(0, _maxSpinningDurationDelayBetweenConsecutiveRollers), 0, _delayBetweenRollers);
+        return Random.Range(_minSpinningDuration, _maxSpinningDuration);
+    }
+
+    private float GetExtraRandomDuration(float dur)
+    {
+        dur += Mathf.Clamp(Random.Range(0, _maxSpinningDurationDelayBetweenConsecutiveRollers), 0, _delayBetweenRollers);
         //Debug.Log("randomDuration: " + randomDuration);
-        int spins = Mathf.RoundToInt(_spinVelocity * randomDuration);
+        int spins = Mathf.RoundToInt(_spinVelocity * dur);
         return (float)spins / _spinVelocity;
     }
 
