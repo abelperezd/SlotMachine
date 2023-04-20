@@ -50,7 +50,6 @@ public class RollerManager : MonoBehaviour
 
     IEnumerator SpinRollers()
     {
-        yield return new WaitForSeconds(.5f);
         foreach (Roller r in _rollers)
         {
             SpinningConfiguration configuration = GetSpinningConfiguration(GetSpinDuration());
@@ -63,8 +62,7 @@ public class RollerManager : MonoBehaviour
 
     private void Start()
     {
-        //Debug.Log("Slow down duration: " + SlowDownDuration);
-        StartSpinningRollers();
+        GameManager.Instance.OnGameStarted += StartSpinningRollers;
     }
 
     private float GetSpinDuration()

@@ -56,7 +56,6 @@ public class Roller : MonoBehaviour
 
     IEnumerator Spin(SpinningConfiguration config)
     {
-        yield return null;
         TryRestart();
         int extraSubSteps = 1;
 
