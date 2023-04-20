@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 [RequireComponent(typeof(Animator))]
 public class UIManager : MonoBehaviour
 {
+    #region Fields and properties
+
+    internal static UIManager Instance => _instance;
     private static UIManager _instance;
-    public static UIManager Instance => _instance;
+
+    [SerializeField] private TMP_Text _prizeText;
+    [SerializeField] private TMP_Text _creditText;
 
     Animator _animator;
 
-    public TMP_Text prizeText;
-    public TMP_Text creditText;
+    #endregion
+
+    #region Unit callbacks
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -34,16 +39,21 @@ public class UIManager : MonoBehaviour
         UpdateCredit();
     }
 
+    #endregion
+
+    #region Methods
+
     private void PlayPrizeAnimation(int prize, float duration)
     {
-        prizeText.text = prize.ToString();
+        _prizeText.text = prize.ToString();
         _animator.SetFloat("vel", duration);
         _animator.SetTrigger("play");
     }
 
     private void UpdateCredit()
     {
-        creditText.text = (GameManager.Instance.Credit.ToString());
+        _creditText.text = (GameManager.Instance.Credit.ToString());
     }
 
+    #endregion
 }

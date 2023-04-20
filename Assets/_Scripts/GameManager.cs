@@ -1,19 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Fields and properties
 
-    private static GameManager _instance;
+    public int Credit => _credit;
+    [Range(1,50)]
+    [SerializeField] private int _credit = 50;
+
     public static GameManager Instance => _instance;
+    private static GameManager _instance;
+
+    #endregion
+
+    #region Events
 
     internal event Action OnGameStarted;
     internal event Action OnGameFinished;
 
-    [SerializeField] private int _credit = 50;
-    public int Credit => _credit;
+    #endregion
+
+    #region Unity callbacks
 
     private void Awake()
     {
@@ -25,6 +33,10 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
     }
+
+    #endregion
+
+    #region Methods
 
     public void StartGame()
     {
@@ -40,4 +52,6 @@ public class GameManager : MonoBehaviour
         _credit += prize;
         OnGameFinished?.Invoke();
     }
+
+    #endregion
 }

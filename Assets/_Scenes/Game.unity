@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 327214831}
   - component: {fileID: 327214830}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,7 +441,7 @@ RectTransform:
   - {fileID: 2118452494}
   - {fileID: 459805576}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -480,8 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272619da65c2ba94c86f1f18c10e61b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prizeText: {fileID: 459805577}
-  creditText: {fileID: 1293913973}
+  _prizeText: {fileID: 459805577}
+  _creditText: {fileID: 1293913973}
 --- !u!1 &440144245
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7190355ac15e1e47bae365cf71e0aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figurePrefabs:
+  _figurePrefabs:
   - {fileID: 5421160556399448277, guid: d64c5c7e2374c9a438d8612e86bda797, type: 3}
   - {fileID: 8222585060322839817, guid: 1dc3c9f75f89ae5449f6bf4813e3925a, type: 3}
   - {fileID: 6940144785156691775, guid: 7a00dbe04af5f6b4f9e0f7ba9500ba13, type: 3}
@@ -519,7 +519,7 @@ MonoBehaviour:
   - {fileID: 3560055223655908986, guid: b4cf493c5d7022f49a786ebd7e151643, type: 3}
   - {fileID: 6176779463757438659, guid: 2955b3376c4db3b4091a8e189d23f3f0, type: 3}
   - {fileID: 4645182601085553786, guid: a5a551c46c9303d419dff123710a09dd, type: 3}
-  figureTypes: 00000000010000000200000003000000040000000500000006000000
+  _figureTypes: 00000000010000000200000003000000040000000500000006000000
 --- !u!4 &440144247
 Transform:
   m_ObjectHideFlags: 0
@@ -533,7 +533,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &442167085
 GameObject:
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 1, b: 0.010393143, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -836,7 +836,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1050686967 stripped
 Transform:
@@ -920,7 +920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129991579
 GameObject:
@@ -965,7 +965,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1235095543
 PrefabInstance:
@@ -1272,11 +1272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddc0a3ca8aa12e4a8d25817918a22ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timingController:
-    _spinVelocity: 8
-    _delayBetweenRollers: 0.5
+  _durationGenerator:
     _minSpinningDuration: 2
     _maxSpinningDuration: 4
+    _maxSpinningDurationDelayBetweenConsecutiveRollers: 0.5
   _rollers:
   - {fileID: 1050686968}
   - {fileID: 1235095545}
@@ -1285,9 +1284,6 @@ MonoBehaviour:
   - {fileID: 1983222774}
   _spinVelocity: 15
   _delayBetweenRollers: 0.2
-  _minSpinningDuration: 1
-  _maxSpinningDuration: 3
-  _maxSpinningDurationDelayBetweenConsecutiveRollers: 0.48
   _slowDownPercentage: 0.15
   _visualizationFrequency: 7
 --- !u!4 &1490974907
@@ -1308,7 +1304,7 @@ Transform:
   - {fileID: 73584258}
   - {fileID: 1983222773}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1522073888
 GameObject:
@@ -1324,7 +1320,7 @@ GameObject:
   - component: {fileID: 1522073890}
   - component: {fileID: 1522073893}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Spin Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,9 +1440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1563428793ce7524e88640ad71603269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normal: {fileID: 21300000, guid: ae4f87df831bec34490f27bf13c3862d, type: 3}
-  clicked: {fileID: 21300000, guid: 5a673a5a2fc0e504f95a3707e156d633, type: 3}
-  disbled: {fileID: 21300000, guid: 3a70cf671f916fd4d986085ad766ab3a, type: 3}
+  _normal: {fileID: 21300000, guid: ae4f87df831bec34490f27bf13c3862d, type: 3}
+  _clicked: {fileID: 21300000, guid: 5a673a5a2fc0e504f95a3707e156d633, type: 3}
+  _disbled: {fileID: 21300000, guid: 3a70cf671f916fd4d986085ad766ab3a, type: 3}
 --- !u!1001 &1589851575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1603,7 +1599,7 @@ Transform:
   - {fileID: 442167087}
   - {fileID: 176338100}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1971438123
 GameObject:
@@ -1634,7 +1630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbf01a9a67a05f4fa16f4a1ba6371a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBetweenPrizes: 0.5
+  _delayBetweenPrizes: 0.5
 --- !u!4 &1971438125
 Transform:
   m_ObjectHideFlags: 0
@@ -1648,7 +1644,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1983222772
 PrefabInstance:

@@ -1,38 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary> When checking the price, to know the position of the figure </summary>
 public struct Coordinates
 {
-    public int x { get; set; }
-    public int y { get; set; }
-
-    public Coordinates(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
+    public int x;
+    public int y;
 }
 
 [RequireComponent(typeof(Animator))]
 public class Figure : MonoBehaviour
 {
-    private Roller _roller;
+    #region Fields and properties
+
+    // units: units/figure
+    internal static readonly float FIGURE_SIZE = 2.2f;
 
     [field: SerializeField]
     public FigureType Type { get; private set; }
 
-    public Coordinates coordinates;
+    private Roller _roller;
 
-    private int roller;
+    internal Coordinates Coordinates => _coordinates;
+    private Coordinates _coordinates;
 
     private Animator _animator;
+
+    #endregion
+
+    #region Unity callbacks
 
     void Awake()
     {
         _roller = GetComponentInParent<Roller>();
-        coordinates.x = _roller.Position;
+        _coordinates.x = _roller.Position;
     }
 
     private void Start()
@@ -46,35 +46,44 @@ public class Figure : MonoBehaviour
         _roller.OnRollerStopped -= RollerStopped;
     }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary> 
+    /// When the roller stops, check if I'm a visible figure and add me to check if there are prices.
+    /// </summary>
     private void RollerStopped()
     {
         int pos = CheckMyPosition();
         if (pos == -1)
             return;
 
-        coordinates.y = pos;
-        //Debug.Log("I'm selected: " + name);
+        _coordinates.y = pos;
         PrizeManager.Instance.AddFigureToCheck(this);
     }
 
+    /// <summary> Check if I'm in a visible position </summary>
+    /// <returns> 0/1/2 if visible, -1 if not</returns>
     private int CheckMyPosition()
     {
-        //Debug.Log(name + " -> original pos " + transform.position.y);
         int pos = Mathf.RoundToInt(transform.position.y);
 
-        //Debug.Log(name + " -> pos: " + pos);
         if (pos == 3)
             return 0;
         if (pos == 1)
             return 1;
         if (pos == -1)
             return 2;
+
         return -1;
     }
 
-    internal  void PlayPrizeAnimation(float duration)
+    internal void PlayPrizeAnimation(float duration)
     {
         _animator.SetFloat("vel", duration);
         _animator.SetTrigger("play");
     }
+
+    #endregion
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,25 +5,19 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    #region Fields
+
+    [SerializeField] private Sprite _normal;
+    [SerializeField] private Sprite _clicked;
+    [SerializeField] private Sprite _disbled;
+
     private Button btn;
     private Image btnImage;
 
+    #endregion
 
-    public Sprite normal;
-    public Sprite clicked;
-    public Sprite disbled;
+    #region Unity callbacks
 
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        btnImage.sprite = clicked;
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        btnImage.sprite = disbled;
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         btn = GetComponent<Button>();
@@ -34,6 +26,21 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         GameManager.Instance.OnGameFinished += EnableButton;
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        btnImage.sprite = _clicked;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        btnImage.sprite = _disbled;
+    }
+
+
+    #endregion
+
+    #region Methods
 
     private void StartPressed()
     {
@@ -44,6 +51,8 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void EnableButton()
     {
         btn.interactable = true;
-        btnImage.sprite = normal;
+        btnImage.sprite = _normal;
     }
+
+    #endregion
 }
