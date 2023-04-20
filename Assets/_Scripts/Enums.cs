@@ -7,5 +7,6 @@ public enum FigureType
     watermelon,
     orange,
     grape,
-    lemon
+    lemon,
+    NONE
 }

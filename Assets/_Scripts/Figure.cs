@@ -25,7 +25,7 @@ public class Figure : MonoBehaviour
 
     public Coordinates coordinates;
 
-    [SerializeField] private int roller;
+    private int roller;
 
     void Awake()
     {

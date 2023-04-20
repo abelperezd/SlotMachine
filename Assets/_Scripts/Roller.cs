@@ -8,26 +8,45 @@ public class Roller : MonoBehaviour
     [SerializeField]
     private int _position = 0;
 
+    [SerializeField] List<FigureType> figures;
+
     public int Position => _position;
 
-    private Vector3 _startPosition;
+    public  Vector3 _startPosition;
     [SerializeField] private float _yRestartPosition = .75f;
 
     internal event Action OnRollerStopped;
 
     private void Awake()
     {
-        _startPosition = transform.position;
+        SpawnFigures();
+        InitializePosition();
     }
 
-
-    bool countTime = false;
-    float timerCount = 0;
-    void Update()
+    private void InitializePosition()
     {
-        if (countTime)
-            timerCount += Time.deltaTime;
+        float y = figures.Count * RollerManager.FIGURE_SIZE + _yRestartPosition;
+        _startPosition = new Vector3(transform.position.x, y, 0);
+    }
 
+    private void SpawnFigures()
+    {
+        float figureSize = RollerManager.FIGURE_SIZE;
+
+        float spawnPos = figureSize;
+
+        for (int i = 0; i < figures.Count; i++)
+        {
+            FigureFactory.Instance.BuildFigure(figures[i], transform).transform.localPosition = new Vector3(0,spawnPos,0);
+            spawnPos -= figureSize;
+        }
+
+        //To make the repetition trick
+        for (int i = 0; i < 3; i++)
+        {
+            FigureFactory.Instance.BuildFigure(figures[i], transform).transform.localPosition = new Vector3(0, spawnPos, 0);
+            spawnPos -= figureSize;
+        }
     }
 
     public void StartSpinning(SpinningConfiguration config)
@@ -38,6 +57,7 @@ public class Roller : MonoBehaviour
     IEnumerator Spin(SpinningConfiguration config)
     {
         yield return null;
+        TryRestart();
         int extraSubSteps = 1;
 
         for (int j = 0; j < config.stepsToDo; j++)
@@ -49,7 +69,7 @@ public class Roller : MonoBehaviour
                 //yield return null;
                 yield return new WaitForSeconds(config.duration / config.stepsToDo / extraSubSteps);
             }
-            if (j > (config.stepsToDo - config.slowDownSteps) && j%config.visualizationFrequency == 0)
+            if (j > (config.stepsToDo - config.slowDownSteps) && j % config.visualizationFrequency == 0)
                 extraSubSteps += config.extraSubstepsFactor;
         }
         OnRollerStopped?.Invoke();

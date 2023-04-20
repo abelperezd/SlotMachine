@@ -16,7 +16,7 @@ public class RollerManager : MonoBehaviour
 {
     public RollerTimingController timingController;
     // units/figure
-    private const float FIGURE_SIZE = 2.2f;
+    internal static readonly float FIGURE_SIZE = 2.2f;
 
     [SerializeField] private List<Roller> _rollers;
 
@@ -50,11 +50,14 @@ public class RollerManager : MonoBehaviour
 
     IEnumerator SpinRollers()
     {
+        yield return new WaitForSeconds(.5f);
         foreach (Roller r in _rollers)
         {
             SpinningConfiguration configuration = GetSpinningConfiguration(GetSpinDuration());
             r.StartSpinning(configuration);
             yield return new WaitForSeconds(_delayBetweenRollers);
+            //remove this!!
+            yield break;
         }
     }
 
@@ -86,7 +89,7 @@ public class RollerManager : MonoBehaviour
 
         int slowDownSteps = slowDownFigures * _visualizationFrequency;
 
-        int extraSubstepsFactor = _spinVelocity / slowDownFigures;
+        int extraSubstepsFactor = Mathf.Max(1, _spinVelocity / slowDownFigures);
 
         return new SpinningConfiguration
         {
