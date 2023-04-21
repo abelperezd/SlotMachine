@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary> To buil the figures </summary>
+/// <summary> To build the figures </summary>
 public class FigureFactory : MonoBehaviour
 {
     #region Fields

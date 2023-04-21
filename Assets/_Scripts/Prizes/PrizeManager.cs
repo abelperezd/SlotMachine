@@ -54,11 +54,11 @@ public class PrizeManager : MonoBehaviour
         //if we have all the visible figures, get their type and get the patterns found
         List<PatternFound> patternsFound = _checker.CheckPrizes(GetFigureTypes());
 
-        StartCoroutine(ProcessPricesAndRestart(patternsFound));
+        StartCoroutine(ProcessPrizesAndRestart(patternsFound));
     }
 
     /// <summary> Play an aimation for all the found patterns, add the prize and restar the game </summary>
-    private IEnumerator ProcessPricesAndRestart(List<PatternFound> patternsFound)
+    private IEnumerator ProcessPrizesAndRestart(List<PatternFound> patternsFound)
     {
         int totalPrize = 0; //prize of all the found patterns
 

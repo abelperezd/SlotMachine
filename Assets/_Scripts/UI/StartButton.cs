@@ -11,8 +11,8 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private Sprite _clicked;
     [SerializeField] private Sprite _disbled;
 
-    private Button btn;
-    private Image btnImage;
+    private Button _btn;
+    private Image _btnImage;
 
     #endregion
 
@@ -20,21 +20,21 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Start()
     {
-        btn = GetComponent<Button>();
-        btnImage = btn.GetComponent<Image>();
-        btn.onClick.AddListener(StartPressed);
+        _btn = GetComponent<Button>();
+        _btnImage = _btn.GetComponent<Image>();
+        _btn.onClick.AddListener(StartPressed);
 
         GameManager.Instance.OnGameFinished += EnableButton;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        btnImage.sprite = _clicked;
+        _btnImage.sprite = _clicked;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        btnImage.sprite = _disbled;
+        _btnImage.sprite = _disbled;
     }
 
 
@@ -46,13 +46,13 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         AudioManager.Instance.PlayButtonSound();
         GameManager.Instance.StartGame();
-        btn.interactable = false;
+        _btn.interactable = false;
     }
 
     private void EnableButton()
     {
-        btn.interactable = true;
-        btnImage.sprite = _normal;
+        _btn.interactable = true;
+        _btnImage.sprite = _normal;
     }
 
     #endregion
