@@ -1971,7 +1971,7 @@ GameObject:
   - component: {fileID: 1971438125}
   - component: {fileID: 1971438124}
   m_Layer: 0
-  m_Name: PrizeController
+  m_Name: PrizeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
