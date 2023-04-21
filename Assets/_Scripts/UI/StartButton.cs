@@ -44,6 +44,7 @@ public class StartButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void StartPressed()
     {
+        AudioManager.Instance.PlayButtonSound();
         GameManager.Instance.StartGame();
         btn.interactable = false;
     }

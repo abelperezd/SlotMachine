@@ -15,6 +15,10 @@ public class Figure : MonoBehaviour
     // units: units/figure
     internal static readonly float FIGURE_SIZE = 2.2f;
 
+    private static int animationIndex = 0;
+
+    private static readonly int numberOfAnimations = 4;
+
     [field: SerializeField]
     public FigureType Type { get; private set; }
 
@@ -81,8 +85,14 @@ public class Figure : MonoBehaviour
 
     internal void PlayPrizeAnimation(float duration)
     {
+        _animator.SetInteger("index", animationIndex);
         _animator.SetFloat("vel", duration);
         _animator.SetTrigger("play");
+    }
+
+    internal static void UpdateAnimation()
+    {
+        animationIndex = animationIndex == numberOfAnimations - 1 ? 0 : animationIndex + 1;
     }
 
     #endregion

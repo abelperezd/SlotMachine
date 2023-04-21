@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     #region Fields and properties
 
     public int Credit => _credit;
-    [Range(1,50)]
+    [Range(1, 50)]
     [SerializeField] private int _credit = 50;
 
     public static GameManager Instance => _instance;
@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour
         _instance = this;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
+
     #endregion
 
     #region Methods
@@ -50,7 +56,8 @@ public class GameManager : MonoBehaviour
     public void GameFinished(int prize)
     {
         _credit += prize;
-        OnGameFinished?.Invoke();
+        if (_credit > 0)
+            OnGameFinished?.Invoke();
     }
 
     #endregion

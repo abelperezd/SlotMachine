@@ -8,9 +8,8 @@ public class PrizeManager : MonoBehaviour
 {
     #region Fields and properties
 
-    [Range(.1f, 1)]
-    [Tooltip("In case there are multiple patterns found")]
-    [SerializeField] private float _delayBetweenPrizes = 1;
+    [Range(.1f, 2)]
+    [SerializeField] private float _prizeAnimationDuration = 1;
 
     public static PrizeManager Instance => _instance;
     private static PrizeManager _instance;
@@ -28,7 +27,6 @@ public class PrizeManager : MonoBehaviour
     #endregion
 
     #region Unity callbacks
-
 
     private void Awake()
     {
@@ -68,6 +66,7 @@ public class PrizeManager : MonoBehaviour
         {
             foreach (PatternFound p in patternsFound)
             {
+                AudioManager.Instance.PlayPrizeSound();
                 //for each pattern found, get the figures and play an animation on them
                 for (int j = 0; j < p.length; j++)
                 {
@@ -78,17 +77,19 @@ public class PrizeManager : MonoBehaviour
 
                         //get the prized figure and play an animation
                         Figure fig = _selectedFigures.Find(f => f.Coordinates.x == j && f.Coordinates.y == i);
-                        fig.PlayPrizeAnimation(1 / _delayBetweenPrizes);
+                        fig.PlayPrizeAnimation(1 / _prizeAnimationDuration);
 
                         //Debug.Log("I have prize!: " + fig.name + " -> " + fig.transform.parent.name);
                     }
                 }
 
+                Figure.UpdateAnimation();
+
                 totalPrize += p.prize;
                 //play the prize animation
-                OnShowPrize?.Invoke(p.prize, 1 / _delayBetweenPrizes);
+                OnShowPrize?.Invoke(p.prize, 1 / _prizeAnimationDuration);
 
-                yield return new WaitForSeconds(_delayBetweenPrizes);
+                yield return new WaitForSeconds(_prizeAnimationDuration);
             }
         }
 
