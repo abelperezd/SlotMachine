@@ -34,7 +34,7 @@ public class RollerManager : MonoBehaviour
     [Tooltip("Seconds")]
     [SerializeField] private float _delayBetweenRollers = .5f;
 
-    [Range(0, 1)]
+    [Range(.01f, 1)]
     [Tooltip("Percentage of the total time that the roller will be slowing down")]
     [SerializeField] private float _slowDownPercentage = .2f;
 

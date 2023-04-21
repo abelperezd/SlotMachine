@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50251a52a310d33409bf6a221d4a6804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _credit: 1
+  _credit: 10
 --- !u!4 &1129991581
 Transform:
   m_ObjectHideFlags: 0
@@ -1594,8 +1594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _durationGenerator:
-    _minSpinningDuration: 2
-    _maxSpinningDuration: 4
+    _minSpinningDuration: 1.5
+    _maxSpinningDuration: 3.5
     _maxSpinningDurationDelayBetweenConsecutiveRollers: 0.5
   _rollers:
   - {fileID: 1050686968}
